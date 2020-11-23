@@ -6,7 +6,8 @@ import { ProfileType } from '../../type';
 
 const Profile: React.FC = () => {
 	const authorizaton: boolean = useSelector((state: AppState) => state.authorization);
-	const profile: ProfileType = useSelector((state: AppState) => state.profile);
+    const profile: ProfileType = useSelector((state: AppState) => state.profile);
+    
 	if (!authorizaton) return <Redirect to="/login" />;
 	return (
 		<div className="container">
