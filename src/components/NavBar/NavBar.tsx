@@ -12,14 +12,16 @@ const NavBar: React.FC = () => {
 	return (
 		<header className="header">
 			<div className="container">
-				<div className="logo">TASK 1</div>
-				<nav className="nav">
-					{Object.keys(links).map((item) => (
-						<Link key={item} to={links[item]} className="nav__item">
-							{item}
-						</Link>
-					))}
-				</nav>
+				<div className="header__inner">
+					<h1 className="logo">TASK 1</h1>
+					<nav className="nav">
+						{Object.keys(links).map((item) => (
+							<Link key={item} to={links[item]} className="nav__item">
+								{item}
+							</Link>
+						))}
+					</nav>
+				</div>
 			</div>
 		</header>
 	);

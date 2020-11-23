@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Ivan",
+        "surname": "Ivanov",
+        "age": 27,
+        "city": "Moscow",
+        "url": "https://i.pinimg.com/736x/42/c7/78/42c7783187d13b682866f93ac68d9619.jpg",
+        "status": "Admin",
+        "phone": "+7(800)555-35-35",
+        "email": "ivanov@yandex.ru"
+    }
+]
