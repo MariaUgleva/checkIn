@@ -5,20 +5,28 @@ import { AppState } from '../../reducers/rootReducer';
 import { FormData } from '../../type';
 import { logInAppAction } from '../../actions/authorizationActions';
 const Login: React.FC = () => {
-	const dispatch = useDispatch();
-	const [wrongData, setWrongData] = useState(false);
-	const [formData, setFormData] = useState<FormData>({ username: '', password: '' });
+    const dispatch = useDispatch();
+    // состояние отслеживает корректно ли были введены данные (ставит состояние в true в любом случае отправки данных, но если введены корректные данные, мы не увидим сообщения о неверных данных, т. к. нас перекинет на profile)
+    const [wrongData, setWrongData] = useState(false);
+    // состояние для хранения данных из инпутов
+    const [formData, setFormData] = useState<FormData>({ username: '', password: '' });
+    // функция слушает инпуты для ввода логина и пароля
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		setFormData({ ...formData, [event.target.id]: event.target.value });
-	};
+    };
+// функция при нажатии на "отправить" берет состояние formData и отправляет action 
 	const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>): void => {
-		event.preventDefault();
-		dispatch(logInAppAction(formData));
-		setFormData({ username: '', password: '' });
+        event.preventDefault();
+        // отправка данных
+        dispatch(logInAppAction(formData));
+        // очистка состояния
+        setFormData({ username: '', password: '' });
+        // ставим wrongData в true
 		setWrongData(true);
 	};
 
-	const authorizaton: boolean = useSelector((state: AppState) => state.authorization);
+    const authorizaton: boolean = useSelector((state: AppState) => state.authorization);
+    // если пользователь авторизован перебрасываем на профиль
 	if (authorizaton) return <Redirect to="/profile" />;
 	return (
 		<div className="container">
