@@ -11,22 +11,19 @@ const Login: React.FC = (): JSX.Element => {
 	// состояние для хранения данных из инпутов
 	const [formData, setFormData] = useState<FormData>({ username: '', password: '' });
 	// функция слушает инпуты для ввода логина и пароля
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+	const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>): void => {
 		setFormData({ ...formData, [event.target.id]: event.target.value });
-	};
-	const SetFormDataCallback = useCallback(() => setFormData({ username: '', password: '' }), []);
-	const SetWrongDataCallback = useCallback(() => setWrongData(true), []);
-	const dispatchFormData = useCallback(() => dispatch(logInAppAction(formData)), [formData, dispatch]);
+	}, [formData]);
 	// функция при нажатии на "отправить" берет состояние formData и отправляет action
-	const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>): void => {
+	const handleSubmit = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
 		event.preventDefault();
 		// отправка данных
-		dispatchFormData();
+		dispatch(logInAppAction(formData))
 		// очистка состояния
-		SetFormDataCallback();
+		setFormData({ username: '', password: '' })
 		// ставим wrongData в true
-		SetWrongDataCallback();
-	};
+		setWrongData(true)
+	}, [formData, dispatch]);
 	const authorizaton: boolean = useSelector((state: AppState) => state.authorization);
 	// если пользователь авторизован перебрасываем на профиль
 	if (authorizaton) return <Redirect to="/profile" />;
