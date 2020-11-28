@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../../reducers/rootReducer';
 import { ProfileType } from '../../type';
 
-const Profile: React.FC = () => {
+const Profile: React.FC = (): JSX.Element  => {
 	const authorizaton: boolean = useSelector((state: AppState) => state.authorization);
     const profile: ProfileType = useSelector((state: AppState) => state.profile);
     

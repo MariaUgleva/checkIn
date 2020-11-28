@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Main: React.FC = () => {
+const Main: React.FC = (): JSX.Element => {
 	return (
 		<div className="main">
 			<div className="container">

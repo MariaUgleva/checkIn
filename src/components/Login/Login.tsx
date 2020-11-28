@@ -1,37 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../reducers/rootReducer';
 import { FormData } from '../../type';
 import { logInAppAction } from '../../actions/authorizationActions';
-const Login: React.FC = () => {
-    const dispatch = useDispatch();
-    // состояние отслеживает корректно ли были введены данные (ставит состояние в true в любом случае отправки данных, но если введены корректные данные, мы не увидим сообщения о неверных данных, т. к. нас перекинет на profile)
-    const [wrongData, setWrongData] = useState(false);
-    // состояние для хранения данных из инпутов
-    const [formData, setFormData] = useState<FormData>({ username: '', password: '' });
-    // функция слушает инпуты для ввода логина и пароля
+const Login: React.FC = (): JSX.Element => {
+	const dispatch = useDispatch();
+	// состояние отслеживает корректно ли были введены данные (ставит состояние в true в любом случае отправки данных, но если введены корректные данные, мы не увидим сообщения о неверных данных, т. к. нас перекинет на profile)
+	const [wrongData, setWrongData] = useState(false);
+	// состояние для хранения данных из инпутов
+	const [formData, setFormData] = useState<FormData>({ username: '', password: '' });
+	// функция слушает инпуты для ввода логина и пароля
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		setFormData({ ...formData, [event.target.id]: event.target.value });
-    };
-// функция при нажатии на "отправить" берет состояние formData и отправляет action 
-	const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        event.preventDefault();
-        // отправка данных
-        dispatch(logInAppAction(formData));
-        // очистка состояния
-        setFormData({ username: '', password: '' });
-        // ставим wrongData в true
-		setWrongData(true);
 	};
-
-    const authorizaton: boolean = useSelector((state: AppState) => state.authorization);
-    // если пользователь авторизован перебрасываем на профиль
+	const SetFormDataCallback = useCallback(() => setFormData({ username: '', password: '' }), []);
+	const SetWrongDataCallback = useCallback(() => setWrongData(true), []);
+	const dispatchFormData = useCallback(() => dispatch(logInAppAction(formData)), [formData, dispatch]);
+	// функция при нажатии на "отправить" берет состояние formData и отправляет action
+	const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>): void => {
+		event.preventDefault();
+		// отправка данных
+		dispatchFormData();
+		// очистка состояния
+		SetFormDataCallback();
+		// ставим wrongData в true
+		SetWrongDataCallback();
+	};
+	const authorizaton: boolean = useSelector((state: AppState) => state.authorization);
+	// если пользователь авторизован перебрасываем на профиль
 	if (authorizaton) return <Redirect to="/profile" />;
 	return (
 		<div className="container">
 			<form className="form" action="post">
-                <h4 className="form__title">Вход в систему</h4>
+				<h4 className="form__title">Вход в систему</h4>
 				<ul className="form__list">
 					<li className="form__item">
 						<input
@@ -59,7 +61,7 @@ const Login: React.FC = () => {
 						</button>
 					</li>
 				</ul>
-				{wrongData ? <div className='form__error'>Имя пользователя или пароль введены неверно </div> : null}
+				{wrongData ? <div className="form__error">Имя пользователя или пароль введены неверно </div> : null}
 			</form>
 		</div>
 	);

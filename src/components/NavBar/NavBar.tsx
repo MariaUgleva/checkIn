@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 type Nav = {
 	[key: string]: string;
 };
-const NavBar: React.FC = () => {
+const NavBar: React.FC = (): JSX.Element => {
 	const links: Nav = {
 		Главная: '/',
 		Новости: '/news',

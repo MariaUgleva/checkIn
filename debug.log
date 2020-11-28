@@ -1,2 +1,4 @@
 [1123/104350.525:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
 [1123/160329.117:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
+[1128/114503.118:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
+[1128/114503.118:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Maria Ugleva\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\a271e8f4-fcf0-4f0f-88f3-1dd9567caff0: Системе не удается найти указанный путь. (0x3)
